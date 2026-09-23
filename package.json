@@ -1,0 +1,84 @@
+{
+  "name": "@haneoka/vega-plugin-composite",
+  "version": "0.1.0",
+  "description": "Composed character models and layered media for Vega",
+  "license": "MPL-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./model": {
+      "types": "./dist/model.d.ts",
+      "import": "./dist/model.js"
+    },
+    "./package.json": "./package.json",
+    "./import": {
+      "types": "./dist/import.d.ts",
+      "import": "./dist/import.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier --write . --ignore-unknown",
+    "format:check": "prettier --check . --ignore-unknown",
+    "check": "pnpm typecheck && pnpm build"
+  },
+  "dependencies": {
+    "gifuct-js": "^2.1.2",
+    "yaml": "^2.9.1"
+  },
+  "peerDependencies": {
+    "@haneoka/vega": "^0.1.0",
+    "@haneoka/vega-renderer-three": "^0.1.0",
+    "three": ">=0.184.0 <0.185.0"
+  },
+  "peerDependenciesMeta": {
+    "@haneoka/vega-renderer-three": {
+      "optional": true
+    },
+    "three": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@haneoka/vega": "workspace:*",
+    "@haneoka/vega-renderer-three": "workspace:*",
+    "@types/three": "^0.184.1",
+    "three": "0.184.0",
+    "typescript": "^6.0.3",
+    "prettier": "3.7.4"
+  },
+  "vega": {
+    "pluginApi": 1,
+    "kind": "character",
+    "capabilities": [
+      "character"
+    ],
+    "permissions": [
+      "render:webgl"
+    ],
+    "targets": [
+      "web",
+      "pwa",
+      "electron",
+      "tauri",
+      "android",
+      "ios"
+    ]
+  },
+  "packageManager": "pnpm@11.14.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haneoka-gakuen/vega-plugin-composite.git"
+  }
+}
