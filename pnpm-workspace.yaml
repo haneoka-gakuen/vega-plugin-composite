@@ -6,3 +6,6 @@ packages:
 linkWorkspacePackages: true
 autoInstallPeers: false
 strictPeerDependencies: true
+
+allowBuilds:
+  esbuild: true
