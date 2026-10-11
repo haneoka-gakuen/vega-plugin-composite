@@ -80,5 +80,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/haneoka-gakuen/vega-plugin-composite.git"
+  },
+  "keywords": [
+    "vega",
+    "visual-novel",
+    "live2d",
+    "character",
+    "layered-model"
+  ],
+  "homepage": "https://github.com/haneoka-gakuen/vega-plugin-composite#readme",
+  "bugs": {
+    "url": "https://github.com/haneoka-gakuen/vega-plugin-composite/issues"
   }
 }
