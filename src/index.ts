@@ -16,14 +16,18 @@ import {
 export type { CompositeModelDocument, CompositePart } from "./descriptor.js";
 
 export const compositeSource = (entry: AdvCharacterModelEntry): string => String(object(entry.runtime).model ?? "");
-export function compositeChildEntry(part: CompositePart, base: string): AdvCharacterModelEntry {
-  const source =
-    part.options?.projectRoot && /^[a-z][a-z\d+.-]*:\/\//i.test(base)
-      ? new URL(`/${part.source}`, base).href
-      : resolveModelSource(base, part.source);
+export function compositeChildEntry(part: CompositePart, base: string, projectRoot?: string): AdvCharacterModelEntry {
+  const source = part.options?.projectRoot
+    ? projectRoot
+      ? resolveModelSource(`${projectRoot.replace(/\/?$/u, "/")}__root__`, part.source.replace(/^\/+/, ""))
+      : /^[a-z][a-z\d+.-]*:\/\//i.test(base)
+        ? new URL(`/${part.source}`, base).href
+        : part.source
+    : resolveModelSource(base, part.source);
   return {
     runtime: {
       ...part.options,
+      ...(projectRoot ? { projectRoot } : {}),
       format: part.format,
       ...(part.format === "static-portrait" || part.format === "gif" || part.format === "video"
         ? { imageUrl: source }
@@ -76,7 +80,11 @@ export function createCompositeCharacterProvider(): StoryCharacterProvider {
       const children = await Promise.all(
         document.parts.map(async (part) => {
           if (part.optional) return [];
-          const entry = compositeChildEntry(part, source),
+          const entry = compositeChildEntry(
+              part,
+              source,
+              typeof runtime.projectRoot === "string" ? runtime.projectRoot : undefined,
+            ),
             childSource = String(object(entry.runtime).model ?? object(entry.runtime).imageUrl);
           try {
             const dependencies = (await context.enumerateChildResources?.(entry, context.animationUsage)) ?? [];
