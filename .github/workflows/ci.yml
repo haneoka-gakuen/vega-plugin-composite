@@ -19,11 +19,13 @@ jobs:
           repository: haneoka-gakuen/vega
           path: vega-plugin-composite/.dependencies/vega
           persist-credentials: false
+          ref: 2fa1b39c1176852db38a45b453c737e8e3439f5d
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: haneoka-gakuen/vega-renderer-three
           path: vega-plugin-composite/.dependencies/vega-renderer-three
           persist-credentials: false
+          ref: 33a9127d9537cc5c303fceaa35fafda403713b42
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271
         with:
           version: 11.14.0
