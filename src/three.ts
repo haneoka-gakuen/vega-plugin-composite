@@ -54,7 +54,11 @@ export async function createThreeCompositeModel(
   };
   const results = await Promise.allSettled(
     document.parts.map(async (definition) => {
-      const model = await children.create(definition.id, compositeChildEntry(definition, base));
+      const projectRoot = (context.entry.runtime as Record<string, unknown> | undefined)?.projectRoot;
+      const model = await children.create(
+        definition.id,
+        compositeChildEntry(definition, base, typeof projectRoot === "string" ? projectRoot : undefined),
+      );
       if (!isThreeStoryCharacterModel(model)) {
         await dispose(model);
         throw new TypeError(`Invalid surface for part ${definition.id}`);
